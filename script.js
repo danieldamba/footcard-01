@@ -30,4 +30,13 @@ let positions = [
 
 let prefFoot = [
     `R`, `L`, `Ambidexter`
-];
+]
+
+function randomAge() {
+    let age = 16 + (Math.random() * 25);
+    return Math.floor(age);
+}
+
+let firstName = ``;
+let lastName = ``;
+let age = randomAge();
