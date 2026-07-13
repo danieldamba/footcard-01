@@ -71,10 +71,24 @@ let abiVal = [
 ]
 
 // ==================== DOM picks =============================
-const button = document.querySelector(`#start`);
-const infoOne = document.querySelectorAll(`.iPlayer`);
-const infoTwo = document.querySelectorAll(`.ab`);
+
+
+const startButton = document.querySelector(`#start`);
+const resetButton = document.querySelector(`#reset`);
+const info1 = document.querySelectorAll(`.iPlayer`);
+const info2 = document.querySelectorAll(`.ab`);
 const ovrDisplay = document.querySelector(`.ovr-display`);
+
+info1.forEach((elem) => {
+    elem.appendChild(document.createElement(`span`));
+})
+info2.forEach((elem) => {
+    elem.appendChild(document.createElement(`span`));
+})
+
+const infoOne = document.querySelectorAll(`.iPlayer span`);
+const infoTwo = document.querySelectorAll(`.ab span`);
+
 
 
 function randomNumber(start, range) {
@@ -139,13 +153,21 @@ function displayPlayer(player) {
         element.textContent = player.identity[index];
     });
     infoTwo.forEach((element, index) => {
-        element.textContent = `${attributes[index]} : ${player.attributes[index]}`
+        element.textContent = `${player.attributes[index]}`
     });
     ovrDisplay.textContent = player.ovr;
 }
 
-button.addEventListener(`click`, () => {
+startButton.addEventListener(`click`, () => {
     let playerGenerated = generatePlayer();
     displayPlayer(playerGenerated);
 })
+resetButton.addEventListener(`click`, () => {
+    reset();
+})
 
+function reset() {
+    infoOne.forEach((span) => span.textContent = ``)
+    infoTwo.forEach((span) => span.textContent = ``)
+    ovrDisplay.textContent = ``;
+}
