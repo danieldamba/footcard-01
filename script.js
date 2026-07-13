@@ -1,4 +1,7 @@
 
+
+// ================ Data =================================
+// for generation and formulas
 let firstNames = [
     "Amina", "Santiago", "Mei", "Olga", "Kwame", "Priya",
     "Noor", "Diego", "Yuki", "Chloe", "Amara", "Liam",
@@ -42,7 +45,7 @@ const weightPos = [
 ]
 
 const attributes = [
-    `OVR`, `PAC`, `SHO`, `PAS`, `DRI`, `DEF`, `PHY`, `GK`
+    `PAC`, `SHO`, `PAS`, `DRI`, `DEF`, `PHY`, `GK`
 ];
 
 const abilities = [
@@ -67,20 +70,17 @@ let abiVal = [
     [0, 0, 0, 0, 0]
 ]
 
+// ==================== DOM picks =============================
+const button = document.querySelector(`#start`);
+const infoOne = document.querySelectorAll(`.iPlayer`);
+const infoTwo = document.querySelectorAll(`.ab`);
+const ovrDisplay = document.querySelector(`.ovr-display`);
+
+
 function randomNumber(start, range) {
     let num = start + (Math.random() * range);
     return Math.floor(num);
 }
-
-let firstName = randomInList(firstNames);
-let lastName = randomInList(lastNames);
-let age = randomNumber(16, 25);
-let height = randomNumber(160, 45);
-let weight = randomNumber(50, 50);
-
-let nationality = randomInList(countries);
-let pos = randomInList(positions);
-let foot = randomInList(prefFoot);
 
 function randomInList(list) {
     let size = list.length;
@@ -91,35 +91,61 @@ function randomInList(list) {
     return pick;
 }
 
-let data = [
-    firstName, lastName, age,
-    height, weight, nationality,
-    pos, foot
-];
+function generatePlayer() {
+    let playerFirstName = randomInList(firstNames);
+    let playerLastName = randomInList(lastNames);
 
-let positionOf = positions.indexOf(pos);
-let playerSpecWeight = weightPos[positionOf];
+    let playerAge = randomNumber(16, 25);
+    let playerHeight = randomNumber(160, 35);
+    let playerWeight = randomNumber(50, 35);
+    let playerFoot = randomInList(prefFoot);
+
+    let playerNationality = randomInList(countries);
+    let playerPosition = randomInList(positions);
+    const positionOfPlayer = positions.indexOf(playerPosition);;
+    let playerSpecWeight = weightPos[positionOfPlayer];
+
+    let playerSpecAbs = abiVal.map((part, num) =>
+        part.map((ab) => {
+            if (playerSpecWeight[num] <= 5) return randomNumber(10, 20);
+            else if (playerSpecWeight[num] > 5 && playerSpecWeight[num] <= 15) return randomNumber(35, 50);
+            else if (playerSpecWeight[num] > 15 && playerSpecWeight[num] < 25) return randomNumber(40, 50);
+            else return randomNumber(60, 40);
+        }));
+
+    let playerAttributes = playerSpecAbs.map((part) => {
+        return Math.floor(part.reduce((a, b) => a + b) / part.length);
+    })
+    let playerOvr = playerAttributes.reduce((fAttr, sAttr, index) =>
+        Math.floor(fAttr + sAttr * (playerSpecWeight[index] / 100)), 0);
 
 
-let playerSpecAbs = abiVal.map((part, num) =>
-    part.map((ab) => {
-        if (playerSpecWeight[num] <= 5) return randomNumber(10, 20);
-        else if (playerSpecWeight[num] > 5 && playerSpecWeight[num] <= 15) return randomNumber(35, 50);
-        else if (playerSpecWeight[num] > 15 && playerSpecWeight[num] < 25) return randomNumber(40, 50);
-        else return randomNumber(60, 40);
-    }));
+    return {
+        identity: [
+            playerFirstName, 
+            playerLastName, playerAge,
+            playerNationality, playerPosition, 
+            playerHeight, playerWeight, 
+            playerFoot
+        ],
+        
+        attributes: playerAttributes,
+        ovr: playerOvr,
+    }
+}
 
-console.table(data)
-console.table(playerSpecAbs);
-console.table(abilities);
+function displayPlayer(player) {
+    infoOne.forEach((element, index) => {
+        element.textContent = player.identity[index];
+    });
+    infoTwo.forEach((element, index) => {
+        element.textContent = `${attributes[index]} : ${player.attributes[index]}`
+    });
+    ovrDisplay.textContent = player.ovr;
+}
 
-let playerAttr = playerSpecAbs.map((part) => {
-    return Math.floor(part.reduce((a, b) => a + b) / part.length);
+button.addEventListener(`click`, () => {
+    let playerGenerated = generatePlayer();
+    displayPlayer(playerGenerated);
 })
 
-console.table(playerAttr);
-
-let playerOvr = playerAttr.reduce((fAttr, sAttr, index) =>
-    Math.floor(fAttr + sAttr * (playerSpecWeight[index] / 100)), 0);
-
-console.log(`Player ------------------> ${playerOvr}`);
