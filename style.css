@@ -3,53 +3,66 @@ body {
   padding: 0;
   display: flex;
   flex-direction: column;
-  background-color: #010d1f;
-  color:#fdfff7;
+  background-color: hsl(210, 78%, 9%);
+  color: #fdfff7;
+  height: 100vh;
 }
 
 .header {
-  background-color: #05204a;
-  padding: 0 20px;
+  padding: 10px 20px;
   display: flex;
   color: #fdfff7;
   justify-content: center;
+  gap: 250px;
   height: 10vh;
   align-items: center;
+  font-family: Inter;
 }
 
-h1 {
-  font-family: Inter;
+.header div {
+  font-size: 20px;
+  font-weight: 800;
 }
 
 .main {
   display: flex;
+  flex-direction: column;
   height: 80vh;
   min-height: 70vh;
 }
 
 .aside {
   flex: 2 1 0;
-  background-color: rgb(7, 0, 46);
   color: #fdfff7;
   display: flex;
-  flex-direction: column;
+  gap: 10px;
   justify-content: center;
   align-items: center;
 }
 
-button, p {
+button,
+p {
   font-family: Inter;
+}
+
+#start {
+  background-color: #00ad2b;
+  box-shadow: 1px 1px 2px #69ff8e;
+}
+
+#reset {
+  background-color: #990000;
+  box-shadow: 1px 1px 2px #ff3b3b;
 }
 
 button {
   color: #fdfff7;
-  background-color: #bf1a2f;
-  font-size: 45px;
+  font-size: 25px;
   padding: 10px;
   font-weight: 800;
-  border: 1px solid #fdfff7;
   border-radius: 20px;
   cursor: pointer;
+  border: none;
 }
 
 p {
@@ -59,51 +72,69 @@ p {
 
 .principal {
   flex: 6 1 0;
-  background-color: rgb(0, 0, 29);
   display: flex;
   flex-direction: column;
+  margin: 25px;
+  border: 1px solid #00ad2b;
+  border-radius: 10px;
+  background-color: #000a1a;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
 }
 
 .footer {
-  background-color: #00020c;
   display: flex;
-  color: #fdfff7;
+  color: #d1dbee;
   height: 10vh;
   justify-content: center;
   align-items: center;
   font-family: Roboto;
 
 }
-.frame {
-  width: 80px;
-  height: 80px;
-  background-color: #454950;
-  border-radius: 40px;
-}
+
 .info-one {
   display: flex;
   justify-content: center;
-  gap: 200px;
   align-items: center;
+  gap: 100px;
   font-family: Roboto;
   font-weight: 300;
   font-size: 24px;
-  padding: 35px 10px;
+  padding: 10px;
 }
 
 .info-two {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .ovr-display {
-  background-color: rgb(0, 155, 21);
-  padding: 10px;
   font-family: Inter;
   font-weight: 800;
-  font-size: 30px;
+  font-size: 100px;
+  margin: 50px;
+  border-radius: 20px;
+  text-align: center;
+  color: #990000;
 }
 
 .abilities-display {
   display: flex;
+  gap: 80px;
   flex-flow: row wrap;
+  flex: 3 1 0;
+}
+
+.abilities-display div {
+  font-family: Inter;
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.iPlayer {
+  font-family: Inter;
+  color: #cbd1df;
+  font-weight: 400;
 }

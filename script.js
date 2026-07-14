@@ -161,6 +161,7 @@ function displayPlayer(player) {
 startButton.addEventListener(`click`, () => {
     let playerGenerated = generatePlayer();
     displayPlayer(playerGenerated);
+    updateUiForPlayerData();
 })
 resetButton.addEventListener(`click`, () => {
     reset();
@@ -170,4 +171,23 @@ function reset() {
     infoOne.forEach((span) => span.textContent = ``)
     infoTwo.forEach((span) => span.textContent = ``)
     ovrDisplay.textContent = ``;
+}
+
+function updateUiForPlayerData() {
+    infoTwo.forEach((span) => {
+        if (span.textContent === ``) return;
+        if (isNaN(+span.textContent)) return;
+
+        let note = +span.textContent;
+        let colorNote = Math.floor(note * 1.2);
+
+        span.style.color = `hsl(${colorNote}, 100%, 50%)`
+    });
+
+    let noteOvr = ovrDisplay.textContent
+    if (noteOvr === ``) return;
+    if (isNaN(+noteOvr)) return;
+    let colorOvr = Math.floor(noteOvr * 1.2);
+
+    ovrDisplay.style.color = `hsl(${colorOvr}, 100%, 50%)`
 }
