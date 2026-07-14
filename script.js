@@ -34,14 +34,14 @@ let prefFoot = [
 ];
 
 const weightPos = [
-    [5, 5, 15, 5, 10, 10, 50],
-    [25, 10, 10, 10, 25, 15, 5],
-    [15, 10, 10, 10, 30, 20, 5],
-    [10, 10, 30, 10, 20, 15, 5],
-    [15, 15, 30, 10, 10, 15, 5],
-    [15, 25, 25, 15, 5, 10, 5],
-    [30, 15, 15, 20, 5, 10, 5],
-    [20, 35, 10, 10, 5, 15, 5]
+    [5, 1, 10, 4, 5, 15, 60],
+    [20, 10, 20, 9, 25, 15, 1],
+    [10, 5, 15, 4, 40, 25, 1],
+    [10, 8, 25, 6, 30, 20, 1],
+    [12, 15, 30, 9, 15, 18, 1],
+    [15, 20, 30, 17, 5, 12, 1],
+    [28, 18, 20, 16, 5, 12, 1],
+    [18, 35, 15, 10, 3, 18, 1]
 ]
 
 const attributes = [
@@ -121,10 +121,11 @@ function generatePlayer() {
 
     let playerSpecAbs = abiVal.map((part, num) =>
         part.map((ab) => {
-            if (playerSpecWeight[num] <= 5) return randomNumber(10, 20);
-            else if (playerSpecWeight[num] > 5 && playerSpecWeight[num] <= 15) return randomNumber(35, 50);
-            else if (playerSpecWeight[num] > 15 && playerSpecWeight[num] < 25) return randomNumber(40, 50);
-            else return randomNumber(60, 40);
+            if (playerSpecWeight[num] <= 1) return randomNumber(10, 20);
+            else if (playerSpecWeight[num] > 1 && playerSpecWeight[num] < 10) return randomNumber(35, 30);
+            else if (playerSpecWeight[num] >= 10 && playerSpecWeight[num] <= 20) return randomNumber(40, 40);
+            else if (playerSpecWeight[num] > 20 && playerSpecWeight[num] < 30) return randomNumber(45, 40);
+            else return randomNumber(70, 25);
         }));
 
     let playerAttributes = playerSpecAbs.map((part) => {
