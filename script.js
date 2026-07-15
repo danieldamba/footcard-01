@@ -1,5 +1,4 @@
 
-
 // ================ Data =================================
 // for generation and formulas
 let firstNames = [
@@ -69,28 +68,25 @@ let abiVal = [
     [0, 0, 0],
     [0, 0, 0, 0, 0]
 ]
+// ----------------------------------------------------------------------------------------------------
 
 // ==================== DOM picks =============================
-
-
 const startButton = document.querySelector(`#start`);
 const resetButton = document.querySelector(`#reset`);
 const info1 = document.querySelectorAll(`.iPlayer`);
 const info2 = document.querySelectorAll(`.ab`);
 const ovrDisplay = document.querySelector(`.ovr-display`);
-
 info1.forEach((elem) => {
     elem.appendChild(document.createElement(`span`));
 })
 info2.forEach((elem) => {
     elem.appendChild(document.createElement(`span`));
 })
-
 const infoOne = document.querySelectorAll(`.iPlayer span`);
 const infoTwo = document.querySelectorAll(`.ab span`);
+// --------------------------------------------------------------------------------------------------------
 
-
-
+// ========================= Utils functions =====================================
 function randomNumber(start, range) {
     let num = start + (Math.random() * range);
     return Math.floor(num);
@@ -122,17 +118,19 @@ function generatePlayer() {
     let playerSpecAbs = abiVal.map((part, num) =>
         part.map((ab) => {
             if (playerSpecWeight[num] <= 1) return randomNumber(10, 20);
-            else if (playerSpecWeight[num] > 1 && playerSpecWeight[num] < 10) return randomNumber(35, 30);
-            else if (playerSpecWeight[num] >= 10 && playerSpecWeight[num] <= 20) return randomNumber(40, 40);
-            else if (playerSpecWeight[num] > 20 && playerSpecWeight[num] < 30) return randomNumber(45, 40);
-            else return randomNumber(70, 25);
+            else if (playerSpecWeight[num] > 1 && playerSpecWeight[num] < 10) return randomNumber(35, 40);
+            else if (playerSpecWeight[num] >= 10 && playerSpecWeight[num] <= 20) return randomNumber(75, 22);
+            else if (playerSpecWeight[num] > 20 && playerSpecWeight[num] < 30) return randomNumber(65, 25);
+            else return randomNumber(85, 10);
         }));
 
     let playerAttributes = playerSpecAbs.map((part) => {
         return Math.floor(part.reduce((a, b) => a + b) / part.length);
     })
-    let playerOvr = playerAttributes.reduce((fAttr, sAttr, index) =>
-        Math.floor(fAttr + sAttr * (playerSpecWeight[index] / 100)), 0);
+    let playerOvr = playerAttributes.reduce((fAttr, sAttr, index) => {
+        let calc = Math.floor(fAttr + sAttr * (playerSpecWeight[index] / 100))
+        return calc;
+    }, 0);
 
 
     return {
@@ -159,15 +157,6 @@ function displayPlayer(player) {
     ovrDisplay.textContent = player.ovr;
 }
 
-startButton.addEventListener(`click`, () => {
-    let playerGenerated = generatePlayer();
-    displayPlayer(playerGenerated);
-    updateUiForPlayerData();
-})
-resetButton.addEventListener(`click`, () => {
-    reset();
-})
-
 function reset() {
     infoOne.forEach((span) => span.textContent = ``)
     infoTwo.forEach((span) => span.textContent = ``)
@@ -191,4 +180,18 @@ function updateUiForPlayerData() {
     let colorOvr = Math.floor(noteOvr * 1.2);
 
     ovrDisplay.style.color = `hsl(${colorOvr}, 100%, 50%)`
+    let mainDiv = document.querySelector(`.principal`);
+    mainDiv.style.border = `2px solid hsl(${colorOvr}, 100%, 30%)` 
 }
+// ---------------------------------------------------------------------------------------------------
+
+// =========== Event Listeners ===============
+startButton.addEventListener(`click`, () => {
+    let playerGenerated = generatePlayer();
+    displayPlayer(playerGenerated);
+    updateUiForPlayerData();
+})
+resetButton.addEventListener(`click`, () => {
+    reset();
+})
+// -----------------------------------------------------------------------------------------------------
