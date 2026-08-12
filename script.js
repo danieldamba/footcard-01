@@ -33,14 +33,14 @@ let prefFoot = [
 ];
 
 const weightPos = [
-    [5, 1, 10, 4, 5, 15, 60],
-    [20, 10, 20, 9, 25, 15, 1],
-    [10, 5, 15, 4, 40, 25, 1],
-    [10, 8, 25, 6, 30, 20, 1],
-    [12, 15, 30, 9, 15, 18, 1],
-    [15, 20, 30, 17, 5, 12, 1],
-    [28, 18, 20, 16, 5, 12, 1],
-    [18, 35, 15, 10, 3, 18, 1]
+    [5, 0, 5, 0, 0, 10, 80],
+    [30, 5, 15, 10, 25, 15, 0],
+    [15, 0, 10, 0, 40, 35, 0],
+    [10, 0, 25, 10, 30, 25, 0],
+    [5, 10, 35, 20, 15, 15, 0],
+    [10, 25, 30, 30, 5, 0, 0],
+    [35, 20, 15, 30, 0, 0, 0],
+    [25, 40, 5, 15, 0, 15, 0]
 ]
 
 const attributes = [
@@ -117,12 +117,15 @@ function generatePlayer() {
 
     let playerSpecAbs = abiVal.map((part, num) =>
         part.map((ab) => {
-            if (playerSpecWeight[num] <= 1) return randomNumber(10, 20);
-            else if (playerSpecWeight[num] > 1 && playerSpecWeight[num] < 10) return randomNumber(35, 40);
-            else if (playerSpecWeight[num] >= 10 && playerSpecWeight[num] <= 20) return randomNumber(75, 22);
-            else if (playerSpecWeight[num] > 20 && playerSpecWeight[num] < 30) return randomNumber(65, 25);
-            else return randomNumber(85, 10);
+            if (playerSpecWeight[num] === 0) return randomNumber(10, 25);
+            else if (playerSpecWeight[num] === 5) return randomNumber(30, 40);
+            else if (playerSpecWeight[num] === 10) return randomNumber(45, 40);
+            else if (playerSpecWeight[num] === 15) return randomNumber(70, 15);
+            else if (playerSpecWeight[num] === 20) return randomNumber(70, 13);
+            else if (playerSpecWeight[num] === 25) return randomNumber(70, 10)
+            else return randomNumber(75, 22);
         }));
+
 
     let playerAttributes = playerSpecAbs.map((part) => {
         return Math.floor(part.reduce((a, b) => a + b) / part.length);
@@ -135,13 +138,13 @@ function generatePlayer() {
 
     return {
         identity: [
-            playerFirstName, 
+            playerFirstName,
             playerLastName, playerAge,
-            playerNationality, playerPosition, 
-            playerHeight, playerWeight, 
+            playerNationality, playerPosition,
+            playerHeight, playerWeight,
             playerFoot
         ],
-        
+
         attributes: playerAttributes,
         ovr: playerOvr,
     }
@@ -181,7 +184,7 @@ function updateUiForPlayerData() {
 
     ovrDisplay.style.color = `hsl(${colorOvr}, 100%, 50%)`
     let mainDiv = document.querySelector(`.principal`);
-    mainDiv.style.border = `2px solid hsl(${colorOvr}, 100%, 30%)` 
+    mainDiv.style.border = `2px solid hsl(${colorOvr}, 100%, 30%)`
 }
 // ---------------------------------------------------------------------------------------------------
 
